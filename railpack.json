@@ -44,10 +44,14 @@
     "build": {
       "inputs": [{ "step": "build-native" }],
       "commands": [
+        {
+          "cmd": "git init && git add -A && git config user.email 'build@railway.app' && git config user.name 'Railway Build' && git commit -m 'build'"
+        },
+        {
+          "cmd": "cp packages/backend/native/server-native.node packages/backend/native/server-native.x64.node"
+        },
         { "cmd": "yarn affine @affine/web build" },
-        { "cmd": "ls -la packages/frontend/apps/web/" },
         { "cmd": "yarn affine @affine/admin build" },
-        { "cmd": "ls -la packages/frontend/admin/" },
         { "cmd": "yarn workspace @affine/server build" },
         { "cmd": "mkdir -p packages/backend/server/static" },
         {
