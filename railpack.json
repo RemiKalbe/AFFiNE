@@ -53,11 +53,16 @@
           "cmd": "cp packages/backend/native/server-native.node packages/backend/native/server-native.x64.node"
         },
         { "cmd": "yarn affine @affine/web build" },
+        { "cmd": "yarn affine @affine/mobile build" },
         { "cmd": "yarn affine @affine/admin build" },
         { "cmd": "yarn workspace @affine/server build" },
         { "cmd": "mkdir -p packages/backend/server/static" },
         {
           "cmd": "cp -r packages/frontend/apps/web/dist/. packages/backend/server/static/"
+        },
+        { "cmd": "mkdir -p packages/backend/server/static/mobile" },
+        {
+          "cmd": "cp -r packages/frontend/apps/mobile/dist/. packages/backend/server/static/mobile/"
         },
         { "cmd": "mkdir -p packages/backend/server/static/admin" },
         {
