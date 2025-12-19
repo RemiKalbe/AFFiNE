@@ -44,9 +44,11 @@
     "build": {
       "inputs": [{ "step": "build-native" }],
       "commands": [
-        {
-          "cmd": "git init && git add -A && git config user.email 'build@railway.app' && git config user.name 'Railway Build' && git commit -m 'build'"
-        },
+        { "cmd": "git init" },
+        { "cmd": "git add -A" },
+        { "cmd": "git config user.email build@railway.app" },
+        { "cmd": "git config user.name 'Railway Build'" },
+        { "cmd": "git commit -m build" },
         {
           "cmd": "cp packages/backend/native/server-native.node packages/backend/native/server-native.x64.node"
         },
