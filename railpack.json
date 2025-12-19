@@ -2,22 +2,47 @@
   "$schema": "https://schema.railpack.com",
   "provider": "node",
   "packages": {
-    "node": "22"
+    "node": "22",
+    "rust": "1.92.0"
   },
   "caches": {
     "yarn": {
       "directory": "/usr/local/share/.cache/yarn",
       "type": "shared"
+    },
+    "cargo": {
+      "directory": "/root/.cargo/registry",
+      "type": "shared"
     }
   },
-  "buildAptPackages": ["openssl", "python3", "build-essential"],
+  "buildAptPackages": [
+    "openssl",
+    "python3",
+    "build-essential",
+    "clang",
+    "libssl-dev",
+    "pkg-config"
+  ],
   "steps": {
     "install": {
       "commands": [{ "cmd": "corepack enable" }, { "cmd": "yarn install" }],
       "caches": ["yarn"]
     },
-    "build": {
+    "build-native": {
       "inputs": [{ "step": "install" }],
+      "commands": [
+        {
+          "cmd": "yarn workspace @affine/server-native build --target x86_64-unknown-linux-gnu"
+        }
+      ],
+      "caches": ["cargo"],
+      "variables": {
+        "CC": "clang -D_BSD_SOURCE",
+        "TARGET_CC": "clang -D_BSD_SOURCE"
+      }
+    },
+    "build": {
+      "inputs": [{ "step": "build-native" }],
       "commands": [
         { "cmd": "yarn affine @affine/web build" },
         { "cmd": "yarn affine @affine/admin build" },
