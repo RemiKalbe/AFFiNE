@@ -3309,6 +3309,10 @@ export type SendTestEmailMutationVariables = Exact<{
   username: Scalars['String']['input'];
   password: Scalars['String']['input'];
   ignoreTLS: Scalars['Boolean']['input'];
+  secure: Scalars['Boolean']['input'];
+  requireTLS: Scalars['Boolean']['input'];
+  senderName?: InputMaybe<Scalars['String']['input']>;
+  envelopeFrom?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type SendTestEmailMutation = {

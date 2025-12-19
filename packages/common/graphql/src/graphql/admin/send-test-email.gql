@@ -1,4 +1,4 @@
-mutation sendTestEmail($host: String!, $port: Int!, $sender: String!, $username: String!, $password: String!, $ignoreTLS: Boolean!) {
+mutation sendTestEmail($host: String!, $port: Int!, $sender: String!, $username: String!, $password: String!, $ignoreTLS: Boolean!, $secure: Boolean!, $requireTLS: Boolean!, $senderName: String, $envelopeFrom: String) {
   sendTestEmail(config: {
     host: $host,
     port: $port,
@@ -6,5 +6,9 @@ mutation sendTestEmail($host: String!, $port: Int!, $sender: String!, $username:
     username: $username,
     password: $password,
     ignoreTLS: $ignoreTLS,
+    secure: $secure,
+    requireTLS: $requireTLS,
+    senderName: $senderName,
+    envelopeFrom: $envelopeFrom,
   })
 }

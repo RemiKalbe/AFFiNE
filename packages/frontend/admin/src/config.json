@@ -124,6 +124,26 @@
       "desc": "Whether ignore email server's TLS certificate verification. Enable it for self-signed certificates.",
       "env": "MAILER_IGNORE_TLS"
     },
+    "SMTP.secure": {
+      "type": "Boolean",
+      "desc": "Whether to use implicit TLS (recommended for port 465). If false, connection starts unencrypted.",
+      "env": "MAILER_SECURE"
+    },
+    "SMTP.requireTLS": {
+      "type": "Boolean",
+      "desc": "Whether to require STARTTLS upgrade. Fails if server doesn't support STARTTLS. Only applies when secure is false.",
+      "env": "MAILER_REQUIRE_TLS"
+    },
+    "SMTP.senderName": {
+      "type": "String",
+      "desc": "Display name for the email sender (e.g. \"AFFiNE Team\"). Will be combined with sender email.",
+      "env": "MAILER_SENDER_NAME"
+    },
+    "SMTP.envelopeFrom": {
+      "type": "String",
+      "desc": "SMTP envelope from address (MAIL FROM command). Used for bounces/delivery notifications. If empty, defaults to sender.",
+      "env": "MAILER_ENVELOPE_FROM"
+    },
     "fallbackDomains": {
       "type": "Array",
       "desc": "The emails from these domains are always sent using the fallback SMTP server."
@@ -155,6 +175,22 @@
     "fallbackSMTP.ignoreTLS": {
       "type": "Boolean",
       "desc": "Whether ignore email server's TLS certificate verification. Enable it for self-signed certificates."
+    },
+    "fallbackSMTP.secure": {
+      "type": "Boolean",
+      "desc": "Whether to use implicit TLS for fallback SMTP (recommended for port 465)."
+    },
+    "fallbackSMTP.requireTLS": {
+      "type": "Boolean",
+      "desc": "Whether to require STARTTLS upgrade for fallback SMTP."
+    },
+    "fallbackSMTP.senderName": {
+      "type": "String",
+      "desc": "Display name for the fallback email sender."
+    },
+    "fallbackSMTP.envelopeFrom": {
+      "type": "String",
+      "desc": "SMTP envelope from address for fallback SMTP."
     }
   },
   "doc": {

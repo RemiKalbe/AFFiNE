@@ -230,6 +230,26 @@
           "description": "Whether ignore email server's TLS certificate verification. Enable it for self-signed certificates.\n@default false\n@environment `MAILER_IGNORE_TLS`",
           "default": false
         },
+        "SMTP.secure": {
+          "type": "boolean",
+          "description": "Whether to use implicit TLS (recommended for port 465). If false, connection starts unencrypted and may upgrade via STARTTLS.\n@default false\n@environment `MAILER_SECURE`",
+          "default": false
+        },
+        "SMTP.requireTLS": {
+          "type": "boolean",
+          "description": "Whether to require STARTTLS upgrade. If true and server does not support STARTTLS, sending will fail. Only relevant when secure is false.\n@default false\n@environment `MAILER_REQUIRE_TLS`",
+          "default": false
+        },
+        "SMTP.senderName": {
+          "type": "string",
+          "description": "Display name for the email sender (e.g. \"AFFiNE Team\"). Combined with sender email at runtime.\n@default \"\"\n@environment `MAILER_SENDER_NAME`",
+          "default": ""
+        },
+        "SMTP.envelopeFrom": {
+          "type": "string",
+          "description": "SMTP envelope from address (MAIL FROM command). Used for bounces/delivery notifications. If empty, defaults to sender.\n@default \"\"\n@environment `MAILER_ENVELOPE_FROM`",
+          "default": ""
+        },
         "fallbackDomains": {
           "type": "array",
           "description": "The emails from these domains are always sent using the fallback SMTP server.\n@default []",
@@ -269,6 +289,26 @@
           "type": "boolean",
           "description": "Whether ignore email server's TLS certificate verification. Enable it for self-signed certificates.\n@default false",
           "default": false
+        },
+        "fallbackSMTP.secure": {
+          "type": "boolean",
+          "description": "Whether to use implicit TLS for fallback SMTP (recommended for port 465).\n@default false",
+          "default": false
+        },
+        "fallbackSMTP.requireTLS": {
+          "type": "boolean",
+          "description": "Whether to require STARTTLS upgrade for fallback SMTP.\n@default false",
+          "default": false
+        },
+        "fallbackSMTP.senderName": {
+          "type": "string",
+          "description": "Display name for the fallback email sender.\n@default \"\"",
+          "default": ""
+        },
+        "fallbackSMTP.envelopeFrom": {
+          "type": "string",
+          "description": "SMTP envelope from address for fallback SMTP.\n@default \"\"",
+          "default": ""
         }
       }
     },

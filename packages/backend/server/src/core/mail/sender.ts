@@ -16,6 +16,13 @@ export type SendOptions = Omit<SendMailOptions, 'to' | 'subject' | 'html'> & {
   html: string;
 };
 
+export function formatSender(sender: string, senderName?: string): string {
+  if (senderName && senderName.trim()) {
+    return `"${senderName}" <${sender}>`;
+  }
+  return sender;
+}
+
 function configToSMTPOptions(
   config: AppConfig['mailer']['SMTP']
 ): SMTPTransport.Options {
@@ -23,6 +30,8 @@ function configToSMTPOptions(
     name: config.name,
     host: config.host,
     port: config.port,
+    secure: config.secure,
+    requireTLS: config.requireTLS,
     tls: {
       rejectUnauthorized: !config.ignoreTLS,
     },
@@ -99,9 +108,17 @@ export class MailSender {
   private getSender(domain: string) {
     const { SMTP, fallbackSMTP, fallbackDomains } = this.config.mailer;
     if (this.fallbackSMTP && fallbackDomains.includes(domain)) {
-      return [this.fallbackSMTP, fallbackSMTP.sender] as const;
+      return [
+        this.fallbackSMTP,
+        formatSender(fallbackSMTP.sender, fallbackSMTP.senderName),
+        fallbackSMTP.envelopeFrom,
+      ] as const;
     }
-    return [this.smtp, SMTP.sender] as const;
+    return [
+      this.smtp,
+      formatSender(SMTP.sender, SMTP.senderName),
+      SMTP.envelopeFrom,
+    ] as const;
   }
 
   async send(name: string, options: SendOptions) {
@@ -111,7 +128,7 @@ export class MailSender {
       return null;
     }
 
-    const [smtpClient, from] = this.getSender(domain);
+    const [smtpClient, from, envelopeFrom] = this.getSender(domain);
     if (!smtpClient) {
       this.logger.warn(`Mailer SMTP transport is not configured to send mail.`);
       return null;
@@ -119,7 +136,11 @@ export class MailSender {
 
     metrics.mail.counter('send_total').add(1, { name });
     try {
-      const result = await smtpClient.sendMail({ from, ...options });
+      const mailOptions: SendMailOptions = { from, ...options };
+      if (envelopeFrom) {
+        mailOptions.envelope = { from: envelopeFrom, to: options.to };
+      }
+      const result = await smtpClient.sendMail(mailOptions);
 
       if (result.rejected.length > 0) {
         metrics.mail.counter('rejected_total').add(1, { name });
