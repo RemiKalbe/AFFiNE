@@ -1,5 +1,9 @@
 {
   "$schema": "https://schema.railpack.com",
+  "provider": "nodejs",
+  "packages": {
+    "node": "22"
+  },
   "caches": {
     "yarn": {
       "directory": "/usr/local/share/.cache/yarn",
