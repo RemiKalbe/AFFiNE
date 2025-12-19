@@ -8,17 +8,13 @@
     "yarn": {
       "directory": "/usr/local/share/.cache/yarn",
       "type": "shared"
-    },
-    "node-modules": {
-      "directory": "node_modules/.cache",
-      "type": "shared"
     }
   },
   "buildAptPackages": ["openssl", "python3", "build-essential"],
   "steps": {
     "install": {
       "commands": [{ "cmd": "corepack enable" }, { "cmd": "yarn install" }],
-      "caches": ["yarn", "node-modules"]
+      "caches": ["yarn"]
     },
     "build": {
       "inputs": [{ "step": "install" }],
@@ -26,8 +22,7 @@
         { "cmd": "yarn affine @affine/web build" },
         { "cmd": "yarn affine @affine/admin build" },
         { "cmd": "yarn workspace @affine/server build" }
-      ],
-      "caches": ["node-modules"]
+      ]
     }
   },
   "deploy": {
