@@ -46,7 +46,13 @@
       "commands": [
         { "cmd": "yarn affine @affine/web build" },
         { "cmd": "yarn affine @affine/admin build" },
-        { "cmd": "yarn workspace @affine/server build" }
+        { "cmd": "yarn workspace @affine/server build" },
+        {
+          "cmd": "cp -r packages/frontend/apps/web/dist packages/backend/server/static"
+        },
+        {
+          "cmd": "cp -r packages/frontend/admin/dist packages/backend/server/static/admin"
+        }
       ],
       "deployOutputs": [{ "include": ["packages/**", "node_modules/**"] }]
     }
