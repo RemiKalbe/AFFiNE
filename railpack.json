@@ -45,7 +45,9 @@
       "inputs": [{ "step": "build-native" }],
       "commands": [
         { "cmd": "yarn affine @affine/web build" },
+        { "cmd": "ls -la packages/frontend/apps/web/" },
         { "cmd": "yarn affine @affine/admin build" },
+        { "cmd": "ls -la packages/frontend/admin/" },
         { "cmd": "yarn workspace @affine/server build" },
         { "cmd": "mkdir -p packages/backend/server/static" },
         {
