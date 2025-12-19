@@ -47,13 +47,18 @@
         { "cmd": "yarn affine @affine/web build" },
         { "cmd": "yarn affine @affine/admin build" },
         { "cmd": "yarn workspace @affine/server build" },
+        { "cmd": "mkdir -p packages/backend/server/static" },
         {
-          "cmd": "cp -r packages/frontend/apps/web/dist packages/backend/server/static"
+          "cmd": "cp -r packages/frontend/apps/web/dist/. packages/backend/server/static/"
         },
+        { "cmd": "mkdir -p packages/backend/server/static/admin" },
         {
-          "cmd": "cp -r packages/frontend/admin/dist packages/backend/server/static/admin"
+          "cmd": "cp -r packages/frontend/admin/dist/. packages/backend/server/static/admin/"
         }
       ],
+      "variables": {
+        "BUILD_TYPE": "stable"
+      },
       "deployOutputs": [{ "include": ["packages/**", "node_modules/**"] }]
     }
   },
