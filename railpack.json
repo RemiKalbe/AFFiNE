@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.railpack.com",
+  "caches": {
+    "yarn": {
+      "directory": "/usr/local/share/.cache/yarn",
+      "type": "shared"
+    },
+    "node-modules": {
+      "directory": "node_modules/.cache",
+      "type": "shared"
+    }
+  },
+  "buildAptPackages": ["openssl", "python3", "build-essential"],
+  "steps": {
+    "install": {
+      "commands": [{ "cmd": "corepack enable" }, { "cmd": "yarn install" }],
+      "caches": ["yarn", "node-modules"]
+    },
+    "build": {
+      "inputs": [{ "step": "install" }],
+      "commands": [
+        { "cmd": "yarn affine @affine/web build" },
+        { "cmd": "yarn affine @affine/admin build" },
+        { "cmd": "yarn workspace @affine/server build" }
+      ],
+      "caches": ["node-modules"]
+    }
+  },
+  "deploy": {
+    "aptPackages": ["openssl", "libjemalloc2"],
+    "startCommand": "node packages/backend/server/dist/main.js",
+    "variables": {
+      "LD_PRELOAD": "libjemalloc.so.2",
+      "NODE_ENV": "production"
+    }
+  }
+}
