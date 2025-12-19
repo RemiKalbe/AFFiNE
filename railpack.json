@@ -22,7 +22,8 @@
         { "cmd": "yarn affine @affine/web build" },
         { "cmd": "yarn affine @affine/admin build" },
         { "cmd": "yarn workspace @affine/server build" }
-      ]
+      ],
+      "deployOutputs": ["packages", "node_modules"]
     }
   },
   "deploy": {
